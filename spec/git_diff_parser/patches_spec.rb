@@ -25,6 +25,28 @@ module GitDiffParser
         expect(patches[3].file).to eq file3
         expect(patches[3].body).to eq body3
       end
+
+      it "handles path with trailing spaces" do
+        patches = Patches.parse(<<-EOP)
+diff --git a/1 2 3 b/1 2 3
+new file mode 100644
+index 0000000..b85905e
+--- /dev/null
++++ b/1 2 3\t
+@@ -0,0 +1 @@
++1 2 3
+diff --git "a/foo bar \\\\t" "b/foo bar \\\\t"
+new file mode 100644
+index 0000000..3b18e51
+--- /dev/null
++++ "b/foo bar \\\\t"
+@@ -0,0 +1 @@
++hello world
+        EOP
+
+        expect(patches[0].file).to eq("1 2 3")
+        expect(patches[1].file).to eq("foo bar \t")
+      end
     end
   end
 end
