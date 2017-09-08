@@ -6,7 +6,7 @@ module GitDiffParser
     NOT_REMOVED_LINE = /^[^-]/
     NO_NEWLINE_MESSAGE = /^\\ No newline at end of file$/
 
-    attr_accessor :file, :body, :secure_hash
+    attr_accessor :file, :body, :secure_hash, :mode
     # @!attribute [rw] file
     #   @return [String, nil] file path or nil
     # @!attribute [rw] body
@@ -51,6 +51,7 @@ module GitDiffParser
       @body = body || ''
       @file = options[:file] || options['file'] if options[:file] || options['file']
       @secure_hash = options[:secure_hash] || options['secure_hash'] if options[:secure_hash] || options['secure_hash']
+      @mode = options[:mode] || options['mode']
     end
 
     # @return [Array<Line>] changed lines
